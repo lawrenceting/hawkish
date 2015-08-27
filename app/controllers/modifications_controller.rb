@@ -69,6 +69,6 @@ class ModificationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def modification_params
-      params.require(:modification).permit(:date, :content, :Tracker_id)
+      params.require(:modification).permit(:date, :content, :tracker_id)
     end
 end

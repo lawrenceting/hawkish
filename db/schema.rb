@@ -22,12 +22,12 @@ ActiveRecord::Schema.define(version: 20150824023037) do
   create_table "modifications", force: :cascade do |t|
     t.datetime "date"
     t.string   "content"
-    t.integer  "Tracker_id"
+    t.integer  "tracker_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "modifications", ["Tracker_id"], name: "index_modifications_on_Tracker_id"
+  add_index "modifications", ["tracker_id"], name: "index_modifications_on_tracker_id"
 
   create_table "trackers", force: :cascade do |t|
     t.string   "url"
