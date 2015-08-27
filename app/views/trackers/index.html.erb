@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Trackers</h1>
+<h1><%= @mattVar %></h1>
+
+<%= link_to 'New Tracker', new_tracker_path %>
+
+<table>
+  <thead>
+    <tr>
+		<th>Url</th>
+		<th>Nodes</th>
+		<th>Content</th>
+		<th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @trackers.each do |tracker| %>
+      <tr>
+		<td><%= tracker.url %></td>
+		<td><%= tracker.nodes %></td>
+		<td><%= tracker.content %></td>
+		<td><%= link_to 'Show', tracker %></td>
+		<td><%= link_to 'Edit', edit_tracker_path(tracker) %></td>
+		<td><%= link_to 'Destroy', tracker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

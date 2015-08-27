@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @modification.date %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @modification.content %>
+</p>
+
+<p>
+  <strong>Tracker:</strong>
+  <%= @modification.Tracker %>
+</p>
+
+<%= link_to 'Edit', edit_modification_path(@modification) %> |
+<%= link_to 'Back', modifications_path %>

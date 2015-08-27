@@ -1,0 +1,17 @@
+<%= form_for(@tracker) do |f| %>
+	<%= render "error_message", :f => f %>
+	<%= render "#{@tracker.current_step}_step", :f => f %>
+
+	<div class="actions">
+		<p><%= f.submit "Continue" %></p>
+		<p><%= f.submit "Back", :name => "back_button" unless @tracker.first_step? %></p>
+	</div>
+<% end %>
+
+<% if @tracker.current_step == "billing" %>
+	<div id="website">
+		<%= @tracker.get_html.to_s.html_safe %>
+	</div>
+<% end %>
+
+<%= link_to 'Back to URL list', trackers_path %>
