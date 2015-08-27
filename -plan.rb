@@ -19,7 +19,6 @@ str = @tracker.selector.gsub(/(<[^>]*>)/im, "") #remove all tags
 #check for valid url
 # OpenURI::HTTPError: 503 Service Unavailable
 	#delete unused column
-	
 
 @html = `curl -sL GET #{url}` #curl 
 @html = @html[/(<html.*?>[\w\d\s\W\D\S]*<\/html>)/im] #within & including html tag

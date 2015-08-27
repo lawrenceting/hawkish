@@ -7,6 +7,6 @@ class CreateModifications < ActiveRecord::Migration
 
 		t.timestamps null: false
     end
-    add_foreign_key :modifications, :trackers
+#    add_foreign_key :modifications, :trackers
   end
 end
