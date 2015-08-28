@@ -51,6 +51,7 @@ task :update_trackers => :environment do
 				puts "Successfully updated Tracker #{t.id}"
 			else
 				puts "Error: more than 1 node." 
+				puts html
 			end
 			
 		rescue
