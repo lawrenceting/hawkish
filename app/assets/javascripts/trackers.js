@@ -58,6 +58,13 @@ $(function () {
 		url: $('.page-data').data('url')
 	};
 
+	Highcharts.setOptions({
+		//plots, change Date axis to local timezone
+		global : {
+			useUTC : false
+		}	
+	}); 	
+	
 	$.getJSON('/trackers/' + tracker.id + '/modifications.json', function (data) {
 
 		var datetime = data.map(function(obj) {
@@ -70,7 +77,7 @@ $(function () {
 
 		// Create the chart
 		$('#chart').highcharts('StockChart', {
-
+			
 			rangeSelector : {
 				selected : 1
 			},
@@ -79,9 +86,18 @@ $(function () {
 				text : tracker.url
 			},
 
+			credits: {
+				enabled: false
+			},
+			
 			series : [{
-				name : tracker.url,
+				name : "" , //tracker.url 
 				data : combined_data,
+                marker : {
+                    enabled : true,
+                    radius : 5
+                },
+                shadow : true,				
 				tooltip: {
 					valueDecimals: 2
 				}

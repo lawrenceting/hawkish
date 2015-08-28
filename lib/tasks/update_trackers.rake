@@ -48,6 +48,7 @@ task :update_trackers => :environment do
 
 			if html.length == 1
 				Modification.create(date: DateTime.now, content: html.text.strip, tracker_id: t.id)
+				# to do: change content to array of nodes as string 
 				puts "Successfully updated Tracker #{t.id}"
 			else
 				puts "Error: output contains #{html.length} node(s)" 
