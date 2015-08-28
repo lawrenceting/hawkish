@@ -48,6 +48,7 @@ task :update_trackers => :environment do
 
 			if html.length == 1
 				Modification.create(date: DateTime.now, content: html.text.strip, tracker_id: t.id)
+				puts "Successfully updated #{t.id}"
 			else
 				puts "Error: more than 1 node." 
 			end

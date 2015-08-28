@@ -10,6 +10,9 @@ rails g scaffold Group name:string
 
 whenever -w --set environment=development
 
+heroku ps --app hawkish
+heroku logs --ps web.1 --app hawkish
+
 str = @tracker.selector.gsub(/(<[^>]*>)/im, "") #remove all tags
 
 - deploy to heroku to see if scheduler works
