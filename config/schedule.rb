@@ -28,4 +28,5 @@ every 1.minutes do
 end
 
 every :reboot do
+	rake 'update_trackers', environment => "development"
 end
