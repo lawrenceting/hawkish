@@ -23,7 +23,11 @@ $(function(){
 
 		} else {
 			$( $this[0].attributes ).each(function( i, attr ) {
-				nodes.push($this[0].tagName, attr.name, attr.value);
+				nodes.push(
+					$this[0].tagName.trim(), 
+					attr.name.trim(), 
+					(attr.value.trim() == "") ? "[no_attr_val]" : attr.value.trim()
+				);
 			});			
 		}
 		
