@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2015-09-04 17:52:07
+  content: MyString
+  tracker_id: 
+
+two:
+  date: 2015-09-04 17:52:07
+  content: MyString
+  tracker_id: 

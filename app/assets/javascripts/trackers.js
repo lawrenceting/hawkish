@@ -69,7 +69,7 @@ $(function () {
 		}	
 	}); 	
 	
-	$.getJSON('/trackers/' + tracker.id + '/modifications.json', function (data) {
+	$.getJSON('/trackers/' + tracker.id + '/updates.json', function (data) {
 
 		var datetime = data.map(function(obj) {
 			return moment.utc(obj.date).valueOf();

@@ -12,12 +12,12 @@ class TrackersController < ApplicationController
   # GET /trackers/1.json
   def show
 	@tracker = Tracker.find(params[:id]) 
-	@modifications = @tracker.modifications 
+	@updates = @tracker.updates 
   end
 	
-	def modifications
+	def updates
 		@tracker = Tracker.find(params[:id]) 
-		@modifications = @tracker.modifications 
+		@updates = @tracker.updates 
 	end	
 
   # GET /trackers/new
@@ -56,7 +56,7 @@ class TrackersController < ApplicationController
 		flash[:notice] = "Tracker saved!"
 		redirect_to @tracker
 		  
-		Modification.create(date: DateTime.now, content: @tracker.content, tracker_id: @tracker.id)
+		Update.create(date: DateTime.now, content: @tracker.content, tracker_id: @tracker.id)
 	  end
 	end
 	
@@ -78,7 +78,7 @@ class TrackersController < ApplicationController
   # DELETE /trackers/1.json
   def destroy
 	@tracker.destroy
-	@tracker.modifications.destroy_all #destroys all associations
+	@tracker.updates.destroy_all #destroys all associations
 	  
     respond_to do |format|
       format.html { redirect_to trackers_url, notice: 'Tracker was successfully destroyed.' }

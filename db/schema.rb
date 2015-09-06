@@ -11,23 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824023037) do
-
-  create_table "groups", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "modifications", force: :cascade do |t|
-    t.datetime "date"
-    t.string   "content"
-    t.integer  "tracker_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "modifications", ["tracker_id"], name: "index_modifications_on_tracker_id"
+ActiveRecord::Schema.define(version: 20150904082207) do
 
   create_table "trackers", force: :cascade do |t|
     t.string   "url"
@@ -36,5 +20,15 @@ ActiveRecord::Schema.define(version: 20150824023037) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "updates", force: :cascade do |t|
+    t.datetime "date"
+    t.string   "content"
+    t.integer  "tracker_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "updates", ["tracker_id"], name: "index_updates_on_tracker_id"
 
 end

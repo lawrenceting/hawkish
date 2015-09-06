@@ -1,10 +1,8 @@
 Rails.application.routes.draw do	
-  resources :groups
-
-  resources :modifications
+  resources :updates
 
   resources :trackers
-	get '/trackers/:id/modifications', to: 'trackers#modifications'
+	get '/trackers/:id/updates', to: 'trackers#updates'
 	
 
   # The priority is based upon order of creation: first created -> highest priority.

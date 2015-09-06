@@ -4,7 +4,7 @@ class Tracker < ActiveRecord::Base
 	require 'nokogiri'
 	require 'open-uri'		
 	
-	has_many :modifications 
+	has_many :updates 
 	
 	attr_writer :current_step
 
@@ -47,9 +47,9 @@ class Tracker < ActiveRecord::Base
 		@html = @html.css('html') #html tag + content in between 
 		@html.search('.//title').remove
 		@html.search('.//meta').remove
-#		@html.search('.//style').remove
 		@html.search('.//script').remove
 		@html.xpath('//comment()').remove
+#		@html.search('.//style').remove
 #		@html.search('.//link').remove
 		
 		@html.inner_html

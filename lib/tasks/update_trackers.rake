@@ -14,9 +14,6 @@ task :update_trackers => :environment do
 			
 			all_nodes.in_groups_of(3) { |tagName, attr_name, attr_val|
 				new_nodes.push(tagName.downcase, attr_name, attr_val)
-				
-				puts "#{tagName}, #{attr_name}, #{attr_val}"
-				
 				break if attr_name == 'id'
 			}
 			
@@ -39,12 +36,8 @@ task :update_trackers => :environment do
 					html = html.css("#{tagName}[#{attr_name}]")
 					
 				else #with attributes
-					temp = ""
-					(attr_val.length).downto(1) { |i|
-						temp = html.xpath("//#{tagName}[starts-with(@#{attr_name}, '#{attr_val[0,i]}')]")
-						#% similar
-						break if temp.length > 0
-					} # end of loop
+					
+					temp = html.css("#{tagName}[#{attr_name}='#{attr_val}']") 
 
 					if temp.length == 0
 						temp = html.css("#{tagName}[#{attr_name}]")
@@ -52,6 +45,7 @@ task :update_trackers => :environment do
 					else
 						html = temp
 					end # end if
+				
 				end # end if
 
 				#ensure last node does not have children
@@ -63,10 +57,18 @@ task :update_trackers => :environment do
 				} if new_nodes.length/3-1 == index #if end of loop
 			} # end of loop
 				
-			if html.length == 1
-				Modification.create(date: DateTime.now, content: html.text.strip, tracker_id: t.id)
-				# to do: change content to array of nodes as string 
-				p "Successfully updated Tracker #{t.id}"
+			if (html.length == 1)
+				
+				if (t.updates.last.content != html.text.strip)
+					
+					Update.create(date: DateTime.now, content: html.text.strip, tracker_id: t.id)
+					ModelMailer.new_update_notification(t, t.updates).deliver
+					p "Successfully updated Tracker #{t.id}"
+					
+				else
+					p "Content Tracker #{t.id} remains unchanged."
+				end
+				
 			else
 				p "Tracker #{t.id} failed to update."
 				p "Error: output contains #{html.length} node(s)" 
@@ -76,5 +78,5 @@ task :update_trackers => :environment do
 		else
 			p "#{all_nodes.length} not divisible by 3."
 		end # end if
-	end	
-end
+	end	# end loop
+end # end task
