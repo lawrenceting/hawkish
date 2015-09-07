@@ -56,7 +56,7 @@ class TrackersController < ApplicationController
 		flash[:notice] = "Tracker saved!"
 		redirect_to @tracker
 		  
-		Update.create(date: DateTime.now, content: @tracker.content, tracker_id: @tracker.id)
+		Update.create(content: @tracker.content, tracker_id: @tracker.id)
 	  end
 	end
 	

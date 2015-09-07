@@ -1,8 +1,17 @@
 <p id="notice"><%= notice %></p>
 
-<%= content_tag :div, class: "page-data", data: {id: @tracker.id, url: @tracker.url} do %><% end %>
-
-<div id="chart"></div>
+<%= content_tag :div, id: "chart_#{@tracker.id}", class: "chart page-data", data: {id: @tracker.id, url: @tracker.url} do %>
+<% end %>
 
 <%= link_to 'Edit', edit_tracker_path(@tracker) %> |
 <%= link_to 'Back', trackers_path %>
+
+<script>
+	$(function () {
+		var tracker = {
+			id: $('.page-data').data('id'),
+			url: $('.page-data').data('url')
+		};
+		drawChart(tracker);
+	});
+</script>

@@ -61,7 +61,7 @@ task :update_trackers => :environment do
 				
 				if (t.updates.last.content != html.text.strip)
 					
-					Update.create(date: DateTime.now, content: html.text.strip, tracker_id: t.id)
+					Update.create(content: html.text.strip, tracker_id: t.id)
 					ModelMailer.new_update_notification(t, t.updates).deliver
 					p "Successfully updated Tracker #{t.id}"
 					

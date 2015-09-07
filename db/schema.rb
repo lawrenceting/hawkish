@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 20150904082207) do
   end
 
   create_table "updates", force: :cascade do |t|
-    t.datetime "date"
     t.string   "content"
     t.integer  "tracker_id"
     t.datetime "created_at", null: false

@@ -55,24 +55,19 @@ $(function(){
 	}
 })
 
-//show tracker
-$(function () {
-	var tracker = {
-		id: $('.page-data').data('id'),
-		url: $('.page-data').data('url')
-	};
-
+function drawChart(tracker){
+				
 	Highcharts.setOptions({
 		//plots, change Date axis to local timezone
 		global : {
 			useUTC : false
 		}	
-	}); 	
-	
-	$.getJSON('/trackers/' + tracker.id + '/updates.json', function (data) {
+	}); 				
+
+	$.getJSON('/trackers/' + tracker.id + '/updates', function (data) {
 
 		var datetime = data.map(function(obj) {
-			return moment.utc(obj.date).valueOf();
+			return moment.utc(obj.created_at).valueOf();
 		});
 		var content = data.map(function(obj) {
 			return parseFloat(obj.content.replace(/[^0-9\.]+/g,''));
@@ -80,8 +75,8 @@ $(function () {
 		var combined_data = _.zip(datetime, content)
 
 		// Create the chart
-		$('#chart').highcharts('StockChart', {
-			
+		$('#chart_'+tracker.id).highcharts('StockChart', {
+
 			rangeSelector : {
 				selected : 1
 			},
@@ -93,19 +88,19 @@ $(function () {
 			credits: {
 				enabled: false
 			},
-			
+
 			series : [{
 				name : "" , //tracker.url 
 				data : combined_data,
-                marker : {
-                    enabled : true,
-                    radius : 5
-                },
-                shadow : true,				
+				marker : {
+					enabled : true,
+					radius : 5
+				},
+				shadow : true,				
 				tooltip: {
 					valueDecimals: 2
 				}
 			}]
 		});
 	});
-});
+}
