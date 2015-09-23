@@ -36,7 +36,6 @@ rails g migration RemoveDetailsFromModifications price
 
 ## to do: ##
 change content to array of nodes as string 
-- dont remove css, remove when clicked, 
 - confirm track $16.99
 # check for valid url
 # OpenURI::HTTPError: 503 Service Unavailable
@@ -55,3 +54,13 @@ create new heroku application then use sub branch, then merge when ready
 #		rescue
 #		end							
 #	}	
+
+					#check if there's children from jquery 
+					
+					#ensure last node does not have children
+#					temp.each { |node| 
+#						begin
+#							temp.delete(node) if node.element_children.length > 0
+#						rescue
+#						end							
+#					} if new_nodes.length/3-1 == index #if end of loop

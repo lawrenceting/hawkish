@@ -1,3 +1,14 @@
+<script>
+	$j(function(){
+		if (window.jQuery){
+			console.log("Website is running jQuery version: " + jQuery.fn.jquery);
+		} else {
+			console.log("Website is not running jQuery");
+		}
+		console.log( "You are running jQuery version: " + $j.fn.jquery );
+	}) //
+</script>
+
 <div class="field">
 	<p>
 		<%= f.label :nodes %>

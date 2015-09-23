@@ -46,8 +46,8 @@ class Tracker < ActiveRecord::Base
 		@html = Nokogiri::HTML(open(self.url))
 		@html = @html.css('html') #html tag + content in between 
 		@html.search('.//title').remove
+#		@html.search('.//script').remove
 		@html.search('.//meta').remove
-		@html.search('.//script').remove
 		@html.xpath('//comment()').remove
 #		@html.search('.//style').remove
 #		@html.search('.//link').remove

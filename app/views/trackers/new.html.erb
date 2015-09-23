@@ -9,7 +9,7 @@
 <% end %>
 
 <% if @tracker.current_step == "billing" %>
-	<div id="website">
+	<div id="websiteWrapper">
 		<%= @tracker.get_html.to_s.html_safe %>
 	</div>
 <% end %>

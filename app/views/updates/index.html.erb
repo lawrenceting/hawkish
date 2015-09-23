@@ -15,7 +15,7 @@
   <tbody>
     <% @updates.each do |update| %>
       <tr>
-        <td><%= update.date %></td>
+        <td><%= update.created_at %></td>
         <td><%= update.content %></td>
         <td><%= update.tracker %></td>
         <td><%= link_to 'Show', update %></td>

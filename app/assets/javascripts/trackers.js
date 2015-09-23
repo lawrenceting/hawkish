@@ -2,105 +2,76 @@
 //= require moment
 //= require highstock
 
-//new tracker
-$(function(){
-	$('#website a').click(function(e) { e.preventDefault(); });
-	
-	var $clicked = []; //get clicked elements
-	var $click_first; //get first clicked elements
-	var nodes = []; //store tagname & attribute of clicked elements
-	var nodes_copy = []; //clone nodes
-	submit_tracker();
-	
-	$("#website *").click(function(e) {
-		
-		var $this = $(this);
-		$clicked.push($(this));
+//use different version of jquery
+var $j = jQuery.noConflict(true);
 
-		//push tagname, attribute name, attribute value
-		if ($this[0].attributes.length === 0){
-			nodes.push($this[0].tagName, "[no_attr_name]", "[no_attr_val]");
+$j(function(){
+	var tracker = new Tracker("websiteWrapper"); // Instantiate new objects with 'new'
+		tracker.run();
+	
+//	html2canvas($j("#website"), {
+//		useCORS: true,
+//		onrendered: function(c1) {
+//			console.log(c1.toDataURL());
+//
+//			var c2 = document.createElement("canvas");
+//				c2.setAttribute('width',200);
+//				c2.setAttribute('height',200);
+//
+//			var ctx = c2.getContext('2d');
+//				ctx.drawImage(c1, 0, 0, c1.width, c1.width, 0, 0, 200, 200);
+//
+//			$j("#website").prepend(c2); // insert the thumbnail
+//		}
+//	});
+	
+	function drawChart(tracker){
 
-		} else {
-			$( $this[0].attributes ).each(function( i, attr ) {
-				nodes.push(
-					$this[0].tagName.trim(), 
-					attr.name.trim(), 
-					(attr.value.trim() == "") ? "[no_attr_val]" : attr.value.trim()
-				);
+		Highcharts.setOptions({
+			//plots, change Date axis to local timezone
+			global : {
+				useUTC : false
+			}	
+		}); 				
+
+		$j.getJSON('/trackers/' + tracker.id + '/updates', function (data) {
+
+			var datetime = data.map(function(obj) {
+				return moment.utc(obj.created_at).valueOf();
+			});
+			var content = data.map(function(obj) {
+				return parseFloat(obj.content.replace(/[^0-9\.]+/g,''));
 			});			
-		}
-		
-		if ($this.parent()[0].id === "website") { //if last node
-			nodes_copy = nodes.slice(0);
-			$click_first = $clicked[0];
-			nodes = [];
-			$clicked = [];
-			$('#website').trigger("submit_tracker");
-			submit_tracker();
-		}
-	});
+			var combined_data = _.zip(datetime, content)
 
-	function submit_tracker(){
-		$('#website').one("submit_tracker", function(e){ 
-			
-			if(nodes_copy.length % 3 === 0){
-				$('#tracker_nodes').val(nodes_copy.join("[split]"));
-				$('#tracker_content').val($click_first.text());
-				
-			} else {
-				$('#tracker_nodes, #tracker_content').val("Error!");
-			}
-		});
-	}
-})
+			// Create the chart
+			$j('#chart_'+tracker.id).highcharts('StockChart', {
 
-function drawChart(tracker){
-				
-	Highcharts.setOptions({
-		//plots, change Date axis to local timezone
-		global : {
-			useUTC : false
-		}	
-	}); 				
-
-	$.getJSON('/trackers/' + tracker.id + '/updates', function (data) {
-
-		var datetime = data.map(function(obj) {
-			return moment.utc(obj.created_at).valueOf();
-		});
-		var content = data.map(function(obj) {
-			return parseFloat(obj.content.replace(/[^0-9\.]+/g,''));
-		});			
-		var combined_data = _.zip(datetime, content)
-
-		// Create the chart
-		$('#chart_'+tracker.id).highcharts('StockChart', {
-
-			rangeSelector : {
-				selected : 1
-			},
-
-			title : {
-				text : tracker.url
-			},
-
-			credits: {
-				enabled: false
-			},
-
-			series : [{
-				name : "" , //tracker.url 
-				data : combined_data,
-				marker : {
-					enabled : true,
-					radius : 5
+				rangeSelector : {
+					selected : 1
 				},
-				shadow : true,				
-				tooltip: {
-					valueDecimals: 2
-				}
-			}]
+
+				title : {
+					text : tracker.url
+				},
+
+				credits: {
+					enabled: false
+				},
+
+				series : [{
+					name : "" , //tracker.url 
+					data : combined_data,
+					marker : {
+						enabled : true,
+						radius : 5
+					},
+					shadow : true,				
+					tooltip: {
+						valueDecimals: 2
+					}
+				}]
+			});
 		});
-	});
-}
+	}	
+});
